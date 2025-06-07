@@ -5,7 +5,7 @@ import networkx as nx
 
 app = FastAPI()
 
-# Add CORS middleware
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],  # React app's address
@@ -42,7 +42,7 @@ async def parse_pipeline(pipeline: Dict):
     num_nodes = len(nodes)
     num_edges = len(edges)
     
-    # Check if the pipeline is a DAG
+    
     is_dag_result = is_dag(nodes, edges)
     
     return {

@@ -822,4 +822,386 @@
   border-color: rgba(255, 255, 255, 0.4);
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
 }
+
+/* Edge Styles */
+.react-flow__edge {
+  transition: all 0.3s ease;
+}
+
+.react-flow__edge-path {
+  stroke: rgba(255, 255, 255, 0.4);
+  stroke-width: 2;
+  transition: all 0.3s ease;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: #60a5fa;
+  filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.6));
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke: #60a5fa;
+  filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.6));
+}
+
+/* Glow Animation */
+@keyframes glow {
+  from {
+    filter: drop-shadow(0 0 2px rgba(96, 165, 250, 0.6));
+  }
+  to {
+    filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.8));
+  }
+}
+
+/* Edge Labels */
+.react-flow__edge-text {
+  fill: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  font-weight: 500;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.react-flow__edge.selected .react-flow__edge-text {
+  fill: #60a5fa;
+  font-weight: 600;
+}
+
+/* Edge Connection Points */
+.react-flow__handle {
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+}
+
+.react-flow__handle:hover {
+  background: #60a5fa;
+  border-color: #60a5fa;
+  box-shadow: 0 0 8px rgba(96, 165, 250, 0.6);
+}
+
+.react-flow__handle.connecting {
+  background: #60a5fa;
+  border-color: #60a5fa;
+  box-shadow: 0 0 8px rgba(96, 165, 250, 0.6);
+}
+
+/* Edge Interaction States */
+.react-flow__edge.interactive {
+  cursor: pointer;
+}
+
+.react-flow__edge.interactive:hover .react-flow__edge-path {
+  stroke: #60a5fa;
+  filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.6));
+}
+
+/* Edge Selection Effect */
+.react-flow__edge.selected {
+  z-index: 1000;
+}
+
+/* Edge Animation for Data Flow */
+@keyframes flowAnimation {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.react-flow__edge.animated .react-flow__edge-path {
+  stroke-dasharray: 5;
+  animation: flowAnimation 1s linear infinite;
+}
+
+/* Edge Types */
+.react-flow__edge.straight .react-flow__edge-path {
+  stroke-linecap: round;
+}
+
+.react-flow__edge.step .react-flow__edge-path {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.react-flow__edge.smoothstep .react-flow__edge-path {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Edge Interaction Feedback */
+.react-flow__edge.interactive:active .react-flow__edge-path {
+  stroke: #3b82f6;
+  filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.8));
+}
+
+/* Edge Connection Animation */
+@keyframes connectionAnimation {
+  0% {
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+.react-flow__edge.connecting .react-flow__edge-path {
+  stroke-dasharray: 5;
+  animation: connectionAnimation 0.5s ease-out;
+}
+
+/* Edge Error State */
+.react-flow__edge.error .react-flow__edge-path {
+  stroke: #ef4444;
+  filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.6));
+}
+
+/* Edge Success State */
+.react-flow__edge.success .react-flow__edge-path {
+  stroke: #10b981;
+  filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6));
+}
+
+/* Edge Loading State */
+.react-flow__edge.loading .react-flow__edge-path {
+  stroke: #60a5fa;
+  filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.6));
+  animation: flowAnimation 1s linear infinite;
+}
+
+/* Edge Focus State */
+.react-flow__edge:focus {
+  outline: none;
+}
+
+.react-flow__edge:focus .react-flow__edge-path {
+  stroke: #60a5fa;
+  filter: drop-shadow(0 0 12px rgba(96, 165, 250, 0.8));
+}
+
+/* Edge Transition Effects */
+.react-flow__edge-path {
+  transition: all 0.3s ease;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  transition: all 0.3s ease;
+}
+
+/* Edge Label Transitions */
+.react-flow__edge-text {
+  transition: all 0.3s ease;
+}
+
+.react-flow__edge.selected .react-flow__edge-text {
+  transition: all 0.3s ease;
+}
+
+/* Edge Handle Transitions */
+.react-flow__handle {
+  transition: all 0.3s ease;
+}
+
+/* Edge Interaction States */
+.react-flow__edge.interactive {
+  transition: all 0.3s ease;
+}
+
+/* Edge Selection Effect */
+.react-flow__edge.selected {
+  transition: all 0.3s ease;
+}
+
+/* Edge Animation for Data Flow */
+.react-flow__edge.animated .react-flow__edge-path {
+  transition: all 0.3s ease;
+}
+
+/* Edge Types */
+.react-flow__edge.straight .react-flow__edge-path,
+.react-flow__edge.step .react-flow__edge-path,
+.react-flow__edge.smoothstep .react-flow__edge-path {
+  transition: all 0.3s ease;
+}
+
+/* Edge Interaction Feedback */
+.react-flow__edge.interactive:active .react-flow__edge-path {
+  transition: all 0.3s ease;
+}
+
+/* Edge Connection Animation */
+.react-flow__edge.connecting .react-flow__edge-path {
+  transition: all 0.3s ease;
+}
+
+/* Edge Error State */
+.react-flow__edge.error .react-flow__edge-path {
+  transition: all 0.3s ease;
+}
+
+/* Edge Success State */
+.react-flow__edge.success .react-flow__edge-path {
+  transition: all 0.3s ease;
+}
+
+/* Edge Loading State */
+.react-flow__edge.loading .react-flow__edge-path {
+  transition: all 0.3s ease;
+}
+
+/* Edge Focus State */
+.react-flow__edge:focus .react-flow__edge-path {
+  transition: all 0.3s ease;
+}
+
+/* Filter Node Specific Styles */
+.filter-node-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.filter-description {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.filter-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.filter-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: #666;
+}
+
+.filter-textarea {
+  width: 100%;
+  min-height: 60px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 12px;
+  resize: vertical;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.filter-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.filter-error {
+  color: #ff4444;
+  font-size: 12px;
+  padding: 4px;
+  background: rgba(255, 68, 68, 0.1);
+  border-radius: 4px;
+  margin: 4px 0;
+}
+
+.filter-result {
+  margin-top: 8px;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+}
+
+.filter-result-label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.filter-result-value {
+  font-family: monospace;
+  font-size: 12px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* Handle Styles */
+.handle {
+  width: 8px;
+  height: 8px;
+  background: #666;
+  border: 2px solid #fff;
+}
+
+.handle-left {
+  left: -4px;
+}
+
+.handle-right {
+  right: -4px;
+}
+
+/* Dragging State */
+.dragging {
+  opacity: 0.8;
+  cursor: grabbing;
+}
+
+/* Button Styles */
+.submit-button {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
+  width: 100%;
+  margin-top: 8px;
+}
+
+.submit-button:hover {
+  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(79, 70, 229, 0.3);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
+}
+
+.submit-button:disabled {
+  background: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
   

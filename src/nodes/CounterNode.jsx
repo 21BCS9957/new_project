@@ -1,14 +1,24 @@
-import React, { memo, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Handle, Position } from 'reactflow';
 import '../styles/NodeStyles.css';
+import { BaseNode } from './BaseNode';
 
-const CounterNode = ({ data }) => {
-  const [count, setCount] = useState(data?.initialValue || 0);
+const CounterNode = ({ id, data }) => {
+  const [count, setCount] = useState(data?.initialCount || 0);
   const [step, setStep] = useState(data?.step || 1);
+  const [isRunning, setIsRunning] = useState(false);
+  const [interval, setInterval] = useState(data?.interval || 1000);
   const [isDragging, setIsDragging] = useState(false);
 
-  const increment = () => setCount(prev => prev + step);
-  const decrement = () => setCount(prev => prev - step);
+  useEffect(() => {
+    let timer;
+    if (isRunning) {
+      timer = setInterval(() => {
+        setCount(prev => prev + step);
+      }, interval);
+    }
+    return () => clearInterval(timer);
+  }, [isRunning, step, interval]);
 
   const handleDragStart = () => {
     setIsDragging(true);
@@ -18,41 +28,75 @@ const CounterNode = ({ data }) => {
     setIsDragging(false);
   };
 
-  return (
-    <div 
-      className={`counter-node node-base ${isDragging ? 'dragging' : ''}`}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-    >
-      <div className="node-header">
-        <span className="node-icon">🔢</span>
-        <span className="node-title">Counter</span>
+  const nodeContent = (
+    <div className="node-content">
+      <div className="counter-display">
+        {count}
       </div>
-      <div className="node-content">
-        <div className="counter-display">{count}</div>
-        <div className="counter-controls">
-          <button className="counter-button" onClick={decrement}>-</button>
-          <button className="counter-button" onClick={increment}>+</button>
-        </div>
-        <div className="counter-step">
-          <label>
-            Step:
-            <input
-              type="number"
-              value={step}
-              onChange={(e) => setStep(Number(e.target.value))}
-              className="counter-input"
-            />
-          </label>
-        </div>
+      <div className="counter-controls">
+        <button 
+          onClick={() => setIsRunning(!isRunning)}
+          className="counter-button"
+        >
+          {isRunning ? 'Stop' : 'Start'}
+        </button>
+        <button 
+          onClick={() => setCount(0)}
+          className="counter-button"
+        >
+          Rest
+        </button>
       </div>
-      <Handle
-        type="source"
-        position={Position.Right}
-        className="handle handle-right"
-      />
+      <div className="counter-group">
+        <label>
+          Step:
+          <input
+            type="number"
+            value={step}
+            onChange={(e) => setStep(Number(e.target.value))}
+            className="counter-input"
+          />
+        </label>
+      </div>
+      <div className="counter-group">
+        <label>
+          Interval (ms):
+          <input
+            type="number"
+            value={interval}
+            onChange={(e) => setInterval(Number(e.target.value))}
+            className="counter-input"
+          />
+        </label>
+      </div>
     </div>
+  );
+
+  const outputs = [
+    { id: 'count' }
+  ];
+
+  return (
+    <BaseNode
+      id={id}
+      data={data}
+      title="Counter"
+      outputs={outputs}
+      style={{
+        width: 250,
+        height: 'auto',
+        minHeight: 200,
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
+        borderRadius: '12px',
+        padding: '10px',
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+      }}
+    >
+      {nodeContent}
+    </BaseNode>
   );
 };
 
-export default memo(CounterNode); 
+export default CounterNode; 

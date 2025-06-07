@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Handle, Position } from 'reactflow';
 import '../styles/NodeStyles.css';
+import { BaseNode } from './BaseNode';
 
 const TimerNode = ({ id, data }) => {
   const [time, setTime] = useState(data?.initialTime || 0);
@@ -40,79 +41,89 @@ const TimerNode = ({ id, data }) => {
     setIsDragging(false);
   };
 
-  return (
-    <div 
-      className={`timer-node node-base ${isDragging ? 'dragging' : ''}`}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-    >
-      <div className="node-header">
-        <span className="node-icon">⏱️</span>
-        <span className="node-title">Timer</span>
+  const nodeContent = (
+    <div className="node-content">
+      <div className="timer-display">
+        {formatTime(time)}
       </div>
-      <div className="node-content">
-        <div className="timer-display">
-          {formatTime(time)}
-        </div>
-        <div className="timer-controls">
-          <button 
-            onClick={() => setIsRunning(!isRunning)}
-            className="timer-button"
+      <div className="timer-controls">
+        <button 
+          onClick={() => setIsRunning(!isRunning)}
+          className="timer-button"
+        >
+          {isRunning ? 'Stop' : 'Start'}
+        </button>
+        <button 
+          onClick={() => setTime(mode === 'countdown' ? targetTime : 0)}
+          className="timer-button"
+        >
+          Reset
+        </button>
+      </div>
+      <div className="timer-group">
+        <label>
+          Mode:
+          <select
+            value={mode}
+            onChange={(e) => setMode(e.target.value)}
+            className="timer-select"
           >
-            {isRunning ? 'Stop' : 'Start'}
-          </button>
-          <button 
-            onClick={() => setTime(mode === 'countdown' ? targetTime : 0)}
-            className="timer-button"
-          >
-            Reset
-          </button>
-        </div>
+            <option value="countdown">Countdown</option>
+            <option value="countup">Count Up</option>
+          </select>
+        </label>
+      </div>
+      {mode === 'countdown' && (
         <div className="timer-group">
           <label>
-            Mode:
-            <select
-              value={mode}
-              onChange={(e) => setMode(e.target.value)}
-              className="timer-select"
-            >
-              <option value="countdown">Countdown</option>
-              <option value="countup">Count Up</option>
-            </select>
-          </label>
-        </div>
-        {mode === 'countdown' && (
-          <div className="timer-group">
-            <label>
-              Target Time (seconds):
-              <input
-                type="number"
-                value={targetTime}
-                onChange={(e) => setTargetTime(Number(e.target.value))}
-                className="timer-input"
-              />
-            </label>
-          </div>
-        )}
-        <div className="timer-group">
-          <label>
-            Interval (ms):
+            Target Time (seconds):
             <input
               type="number"
-              value={interval}
-              onChange={(e) => setInterval(Number(e.target.value))}
+              value={targetTime}
+              onChange={(e) => setTargetTime(Number(e.target.value))}
               className="timer-input"
             />
           </label>
         </div>
+      )}
+      <div className="timer-group">
+        <label>
+          Interval (ms):
+          <input
+            type="number"
+            value={interval}
+            onChange={(e) => setInterval(Number(e.target.value))}
+            className="timer-input"
+          />
+        </label>
       </div>
-      <Handle
-        type="source"
-        position={Position.Right}
-        id={`${id}-time`}
-        className="handle handle-right"
-      />
     </div>
+  );
+
+  const outputs = [
+    { id: 'time' }
+  ];
+
+  return (
+    <BaseNode
+      id={id}
+      data={data}
+      title="Timer"
+      outputs={outputs}
+      style={{
+        width: 250,
+        height: 'auto',
+        minHeight: 200,
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
+        borderRadius: '12px',
+        padding: '16px',
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+      }}
+    >
+      {nodeContent}
+    </BaseNode>
   );
 };
 
